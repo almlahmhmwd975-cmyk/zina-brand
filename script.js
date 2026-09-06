@@ -53,7 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (email === "zina@brand.com" && password === "zina2026") {
                 alert("مرحباً بكِ يا زينة! جاري توجيهك إلى لوحة التحكم...");
                 loginModal.style.display = "none";
-                window.location.href = "/admin/";
+               window.location.href = "/admin/index.html";
+
             } else {
                 alert("عذراً، البريد الإلكتروني أو كلمة السر غير صحيحة!");
             }
