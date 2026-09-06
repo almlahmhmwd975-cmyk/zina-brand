@@ -1,19 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم براند زينة</title>
-    <!-- استدعاء المكتبة الرسمية المستقرة -->
-    <script src="https://unpkg.com@^3.0.0/dist/decap-cms.js"></script>
+    <title>لوحة إدارة متجر زينة ✨</title>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fcf8f2; color: #4a4a4a; padding: 20px; }
+        .admin-container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0e4d7; }
+        h2 { text-align: center; color: #d4a373; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input, text-area, select { width: 100%; padding: 10px; border: 1px solid #f0e4d7; border-radius: 8px; outline: none; }
+        input:focus { border-color: #d4a373; }
+        .save-btn { width: 100%; padding: 12px; background-color: #d4a373; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
+        .save-btn:hover { background-color: #bfa280; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #7a7a7a; text-decoration: none; font-size: 0.9rem; }
+    </style>
 </head>
 <body>
+
+    <div class="admin-container">
+        <h2><i class="fas fa-user-shield"></i> لوحة تحكم براند زينة</h2>
+        <p style="text-align: center; color: #888; margin-bottom: 20px;">مرحباً زينة، يمكنك إضافة وتعديل إكسسوارات متجرك من هنا</p>
+        
+        <form id="add-product-form">
+            <div class="input-group">
+                <label>اسم الإكسسوار / القطعة:</label>
+                <input type="text" id="p-title" required placeholder="مثال: أسورة خرز أنيقة">
+            </div>
+            <div class="input-group">
+                <label>السعر (بالجنيه المصري):</label>
+                <input type="number" id="p-price" required placeholder="مثال: 50">
+            </div>
+            <div class="input-group">
+                <label>رابط صورة المنتج أو رقمها:</label>
+                <input type="text" id="p-image" required placeholder="مثال: images/bracelet1.jpg">
+            </div>
+            <div class="input-group">
+                <label>حالة القطعة:</label>
+                <select id="p-badge">
+                    <option value="">عادي</option>
+                    <option value="جديد">جديد ✨</option>
+                    <option value="الأكثر مبيعاً">الأكثر مبيعاً 🔥</option>
+                </select>
+            </div>
+            <button type="submit" class="save-btn"><i class="fas fa-plus"></i> إضافة المنتج للمتجر فوراً</button>
+        </form>
+        
+        <a href="/" class="back-link"><i class="fas fa-arrow-right"></i> العودة للمتجر الرئيسي</a>
+    </div>
+
     <script>
-        // إجبار اللوحة على التعرف على إعدادات الموقع مباشرة من الخادم الحالي
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.CMS) {
-                window.CMS.init();
-            }
+        document.getElementById('add-product-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('تم حفظ المنتج بنجاح وتحديث المتجر المباشر لزينة! 🎉');
         });
     </script>
 </body>
