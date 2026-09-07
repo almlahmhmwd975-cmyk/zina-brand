@@ -110,7 +110,8 @@ statusDiv.innerHTML = "تم رفع الصورة وتأمينها بنجاح! ✅
         });
 
         // تشغيل فورم الحفظ النهائي المربوط بـ LocalStorage ليعمل على الهاتف فوراً
-        document.getElementById('add-product-form').addEventListener('submit', (e) => {
+               // تشغيل فورم الحفظ النهائي المربوط بالسيرفر السحابي أونلاين
+        document.getElementById('add-product-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             if(!uploadedImageUrl) {
@@ -118,7 +119,6 @@ statusDiv.innerHTML = "تم رفع الصورة وتأمينها بنجاح! ✅
                 return;
             }
 
-            // تجميع بيانات المنتج الجديد في كائن (Object)
             const newProduct = {
                 id: Date.now(),
                 title: document.getElementById('p-title').value,
@@ -127,16 +127,31 @@ statusDiv.innerHTML = "تم رفع الصورة وتأمينها بنجاح! ✅
                 badge: document.getElementById('p-badge').value
             };
 
-            // جلب المنتجات القديمة أو إنشاء مصفوفة فارغة
-            let currentProducts = JSON.parse(localStorage.getItem('zina_products')) || [];
-            currentProducts.push(newProduct);
+            try {
+                // جلب المنتجات القديمة من السيرفر السحابي المجاني المشترك
+                let response = await fetch("https://kvdb.io");
+                let currentProducts = [];
+                if (response.ok) {
+                    currentProducts = await response.json();
+                }
+                
+                // إضافة المنتج الجديد
+                currentProducts.push(newProduct);
 
-            // حفظ التعديل النهائي في الذاكرة المحلية ليعمل أونلاين فوراً على الهاتف
-            localStorage.setItem('zina_products', JSON.stringify(currentProducts));
+                // حفظ القائمة الجديدة بالكامل على السيرفر أونلاين لليراها الجميع
+                await fetch("https://kvdb.io", {
+                    method: "POST",
+                    body: JSON.stringify(currentProducts)
+                });
 
-            alert('تم حفظ المنتج بنجاح وتحديث المتجر المباشر لزينة! 🎉');
-            window.location.href = "/"; // العودة التلقائية للمتجر لرؤية المنتج الجديد
+                alert('تم حفظ المنتج بنجاح وتحديث المتجر المباشر لزينة! 🎉');
+                window.location.href = "/"; // العودة للمتجر الرئيسي
+            } catch (error) {
+                console.error(error);
+                alert("حدثت مشكلة أثناء الحفظ أونلاين، يرجى المحاولة مرة أخرى.");
+            }
         });
+
     </script>
 </body>
 </html>
