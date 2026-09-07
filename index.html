@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>براند زينة | متجر الإكسسوارات والمشغولات اليدوية</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="brand-name">براند زينة ✨</div>
+            <div class="nav-controls">
+                <button id="dark-mode-toggle" class="nav-btn" title="تبديل الوضع الليلي">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="admin-login-btn" class="nav-btn admin-btn">
+                    <i class="fas fa-user-shield"></i> إداريين
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="video-overlay"></div>
+        <video autoplay loop muted playsinline class="hero-video">
+            <source src="./images/hand-animation.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>براند زينة للمشغولات اليدوية</h1>
+            <p>شاهدي تفاصيل الإكسسوارات الساحرة المصنوعة يدوياً بكل حب وإتقان</p>
+            <a href="#shop" class="cta-btn">تصفحي المنتجات الآن</a>
+        </div>
+    </header>
+
+    <main id="shop" class="products-section">
+        <h2 class="section-title">أحدث التصاميم والقطع</h2>
+        <div class="products-container">
+            <!-- الكروت ستظهر هنا تلقائياً بفضل الـ script.js -->
+            <div class="product-card" data-id="1">
+                <div class="product-image">
+                    <img src="https://placeholder.com" alt="أسورة خرز أنيقة" class="zoomable-img">
+                    <span class="badge">الأكثر مبيعاً</span>
+                </div>
+                <div class="product-info">
+                    <h3>أسورة خرز أنيقة</h3>
+                    <p class="price">50 جنيه</p>
+                    <div class="card-actions">
+                        <a href="#" class="buy-btn"><i class="fab fa-whatsapp"></i> اطلبي الآن</a>
+                        <button class="share-btn" title="مشاركة المنتج"><i class="fas fa-share-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <i class="fas fa-lock"></i>
+                <h3>بوابة الإداريين - براند زينة</h3>
+            </div>
+            <form id="admin-login-form">
+                <div class="input-group">
+                    <label for="admin-email">البريد الإلكتروني</label>
+                    <input type="email" id="admin-email" required placeholder="name@example.com">
+                </div>
+                <div class="input-group">
+                    <label for="admin-password">كلمة السر</label>
+                    <input type="password" id="admin-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="submit-login-btn">تسجيل الدخول</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="lightbox-modal" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <a href="https://wa.me" target="_blank" class="floating-whatsapp" title="تحدثي معنا مباشرة">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p>جميع الحقوق محفوظة لـ براند زينة &copy; 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
