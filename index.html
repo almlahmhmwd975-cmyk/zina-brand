@@ -3,95 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>براند زينة | متجر الإكسسوارات والمشغولات اليدوية</title>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <title>لوحة إدارة متجر زينة ✨</title>
     <link rel="stylesheet" href="https://cloudflare.com">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fcf8f2; color: #4a4a4a; padding: 20px; }
+        .admin-container { max-width: 600px; margin: 30px auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #f0e4d7; }
+        h2 { text-align: center; color: #d4a373; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #333; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #f0e4d7; border-radius: 8px; outline: none; font-size: 1rem; }
+        input:focus { border-color: #d4a373; }
+        .file-input-wrapper { position: relative; display: inline-block; width: 100%; }
+        .file-custom-btn { display: block; width: 100%; padding: 12px; background: #f8f9fa; border: 2px dashed #d4a373; text-align: center; border-radius: 8px; cursor: pointer; color: #d4a373; font-weight: bold; }
+        .save-btn { width: 100%; padding: 14px; background-color: #d4a373; color: white; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 15px; }
+        .save-btn:hover { background-color: #bfa280; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #7a7a7a; text-decoration: none; font-size: 0.95rem; }
+        #upload-status { font-size: 0.9rem; color: #d4a373; margin-top: 5px; display: none; font-weight: bold; }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="brand-name">براند زينة ✨</div>
-            <div class="nav-controls">
-                <button id="dark-mode-toggle" class="nav-btn" title="تبديل الوضع الليلي">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button id="admin-login-btn" class="nav-btn admin-btn">
-                    <i class="fas fa-user-shield"></i> إداريين
-                </button>
+    <div class="admin-container">
+        <h2><i class="fas fa-user-shield"></i> لوحة تحكم براند زينة</h2>
+        <p style="text-align: center; color: #888; margin-bottom: 25px;">مرحباً زينة، يمكنك رفع وإضافة منتجاتك مباشرة من هاتفِك المحمول</p>
+        
+        <form id="add-product-form">
+            <div class="input-group">
+                <label>اسم الإكسسوار / القطعة:</label>
+                <input type="text" id="p-title" required placeholder="مثال: أسورة خرز أنيقة">
             </div>
-        </div>
-    </nav>
-
-    <header class="hero-section">
-        <div class="video-overlay"></div>
-        <video autoplay loop muted playsinline class="hero-video">
-            <source src="./images/hand-animation.mp4" type="video/mp4">
-        </video>
-        <div class="hero-content">
-            <h1>براند زينة للمشغولات اليدوية</h1>
-            <p>شاهدي تفاصيل الإكسسوارات الساحرة المصنوعة يدوياً بكل حب وإتقان</p>
-            <a href="#shop" class="cta-btn">تصفحي المنتجات الآن</a>
-        </div>
-    </header>
-
-    <main id="shop" class="products-section">
-        <h2 class="section-title">أحدث التصاميم والقطع</h2>
-        <div class="products-container">
-            <!-- الكروت ستظهر هنا تلقائياً بفضل الـ script.js -->
-            <div class="product-card" data-id="1">
-                <div class="product-image">
-                    <img src="https://placeholder.com" alt="أسورة خرز أنيقة" class="zoomable-img">
-                    <span class="badge">الأكثر مبيعاً</span>
-                </div>
-                <div class="product-info">
-                    <h3>أسورة خرز أنيقة</h3>
-                    <p class="price">50 جنيه</p>
-                    <div class="card-actions">
-                        <a href="#" class="buy-btn"><i class="fab fa-whatsapp"></i> اطلبي الآن</a>
-                        <button class="share-btn" title="مشاركة المنتج"><i class="fas fa-share-alt"></i></button>
-                    </div>
+            
+            <div class="input-group">
+                <label>السعر (بالجنيه المصري):</label>
+                <input type="number" id="p-price" required placeholder="مثال: 50">
+            </div>
+            
+            <div class="input-group">
+                <label>صورة المنتج (من ألبوم الهاتف):</label>
+                <div class="file-input-wrapper">
+                    <input type="file" id="p-image-file" accept="image/*" required style="display: none;">
+                    <label for="p-image-file" class="file-custom-btn" id="file-label">
+                        <i class="fas fa-camera"></i> اضغطي هنا لاختيار صورة من الهاتف
+                    </label>
+                    <div id="upload-status">جاري رفع الصورة للسيرفر السحابي... ⏳</div>
                 </div>
             </div>
-        </div>
-    </main>
-
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <i class="fas fa-lock"></i>
-                <h3>بوابة الإداريين - براند زينة</h3>
+            
+            <div class="input-group">
+                <label>حالة القطعة (اختياري):</label>
+                <select id="p-badge">
+                    <option value="">عادي</option>
+                    <option value="جديد">جديد ✨</option>
+                    <option value="الأكثر مبيعاً">الأكثر مبيعاً 🔥</option>
+                </select>
             </div>
-            <form id="admin-login-form">
-                <div class="input-group">
-                    <label for="admin-email">البريد الإلكتروني</label>
-                    <input type="email" id="admin-email" required placeholder="name@example.com">
-                </div>
-                <div class="input-group">
-                    <label for="admin-password">كلمة السر</label>
-                    <input type="password" id="admin-password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="submit-login-btn">تسجيل الدخول</button>
-            </form>
-        </div>
+            
+            <button type="submit" class="save-btn"><i class="fas fa-cloud-upload-alt"></i> إضافة المنتج للمتجر فوراً</button>
+        </form>
+        
+        <a href="https://vercel.app" class="back-link"><i class="fas fa-arrow-right"></i> العودة للمتجر الرئيسي</a>
     </div>
 
-    <div id="lightbox-modal" class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-        <div id="lightbox-caption"></div>
-    </div>
+    <script>
+        let uploadedImageUrl = ""; 
 
-    <a href="https://wa.me" target="_blank" class="floating-whatsapp" title="تحدثي معنا مباشرة">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+        const fileInput = document.getElementById('p-image-file');
+        const fileLabel = document.getElementById('file-label');
+        const statusDiv = document.getElementById('upload-status');
 
-    <footer>
-        <p>جميع الحقوق محفوظة لـ براند زينة &copy; 2026</p>
-    </footer>
+        if(fileInput) {
+            fileInput.addEventListener('change', async (e) => {
+                const files = e.target.files;
+                if (!files || files.length === 0) return;
 
-    <script src="script.js"></script>
+                const file = files[0];
+                fileLabel.innerHTML = `<i class="fas fa-image"></i> تم اختيار الصورة بنجاح`;
+                statusDiv.style.display = "block";
+                statusDiv.style.color = "#d4a373";
+                statusDiv.textContent = "جاري تهيئة الصورة ورفعها... ⏳";
+
+                const formData = new FormData();
+                formData.append("image", file);
+
+                try {
+                    const response = await fetch("https://imgbb.com", {
+                        method: "POST",
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    if(data.success) {
+                        uploadedImageUrl = data.data.url; 
+                        statusDiv.style.color = "#25d366";
+                        statusDiv.innerHTML = "تم رفع الصورة وتأمينها بنجاح! ✅";
+                    } else {
+                        alert("فشل رفع الصورة، يرجى المحاولة مرة أخرى.");
+                        statusDiv.style.display = "none";
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert("حدث خطأ في الاتصال بالخادم السحابي للصورة.");
+                    statusDiv.style.display = "none";
+                }
+            });
+        }
+
+        const form = document.getElementById('add-product-form');
+        if(form) {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                if(!uploadedImageUrl) {
+                    alert("برجاء الانتظار حتى ينتهي رفع الصورة أولاً!");
+                    return;
+                }
+
+                const newProduct = {
+                    id: Date.now(),
+                    title: document.getElementById('p-title').value,
+                    price: document.getElementById('p-price').value + " جنيه",
+                    image: uploadedImageUrl,
+                    badge: document.getElementById('p-badge').value
+                };
+
+                try {
+                    let response = await fetch("https://kvdb.io");
+                    let currentProducts = [];
+                    if (response.ok) {
+                        currentProducts = await response.json();
+                    }
+                    
+                    currentProducts.push(newProduct);
+
+                    await fetch("https://kvdb.io", {
+                        method: "POST",
+                        body: JSON.stringify(currentProducts)
+                    });
+
+                    alert('تم حفظ المنتج بنجاح وتحديث المتجر المباشر لزينة! 🎉');
+                    window.location.href = "https://vercel.app"; 
+                } catch (error) {
+                    console.error(error);
+                    alert("حدثت مشكلة أثناء الحفظ السحابي، يرجى المحاولة مرة أخرى.");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
