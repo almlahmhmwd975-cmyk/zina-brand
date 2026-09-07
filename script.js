@@ -53,8 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (email === "zina@brand.com" && password === "zina2026") {
                 alert("مرحباً بكِ يا زينة! جاري توجيهك إلى لوحة التحكم...");
                 loginModal.style.display = "none";
-               window.location.href = "/control/index.html";
-
+                window.location.href = "/control/index.html";
             } else {
                 alert("عذراً، البريد الإلكتروني أو كلمة السر غير صحيحة!");
             }
@@ -62,50 +61,49 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 3. 🆕 جلب وعرض المنتجات المرفوعة من الهاتف تلقائياً
-        // ==========================================
-    // 3. جلب وعرض المنتجات من السيرفر السحابي أونلاين
+    // 3. جلب وعرض المنتجات من السيرفر السحابي المفتوح والمضمون
     // ==========================================
     const productsContainer = document.querySelector(".products-container");
 
     if (productsContainer) {
-        // جلب البيانات مباشرة من السيرفر أونلاين المشترك لجميع الأجهزة
-        fetch("https://kvdb.io")
-            .then(response => response.json())
-            .then(savedProducts => {
-                if (savedProducts && savedProducts.length > 0) {
-                    savedProducts.forEach(product => {
-                        const card = document.createElement("div");
-                        card.className = "product-card";
-                        card.setAttribute("data-id", product.id);
+        fetch("https://jsonbin.io", {
+            headers: { "X-Master-Key": "$2a$10$vO8k9P5T36W5D7Sg8nR7euC6M8nZ9P7L5K7e4q8e8nZ8P7L5K7e4q" }
+        })
+        .then(response => response.json())
+        .then(resData => {
+            const savedProducts = resData.record || [];
+            if (savedProducts && savedProducts.length > 0) {
+                savedProducts.forEach(product => {
+                    const card = document.createElement("div");
+                    card.className = "product-card";
+                    card.setAttribute("data-id", product.id);
 
-                        const badgeHTML = product.badge ? `<span class="badge">${product.badge}</span>` : "";
+                    const badgeHTML = product.badge ? `<span class="badge">${product.badge}</span>` : "";
 
-                        card.innerHTML = `
-                            <div class="product-image">
-                                <img src="${product.image}" alt="${product.title}" class="zoomable-img">
-                                ${badgeHTML}
+                    card.innerHTML = `
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.title}" class="zoomable-img">
+                            ${badgeHTML}
+                        </div>
+                        <div class="product-info">
+                            <h3>${product.title}</h3>
+                            <p class="price">${product.price}</p>
+                            <div class="card-actions">
+                                <a href="#" class="buy-btn">
+                                    <i class="fab fa-whatsapp"></i> اطلبي الآن
+                                </a>
+                                <button class="share-btn" title="مشاركة المنتج">
+                                    <i class="fas fa-share-alt"></i>
+                                </button>
                             </div>
-                            <div class="product-info">
-                                <h3>${product.title}</h3>
-                                <p class="price">${product.price}</p>
-                                <div class="card-actions">
-                                    <a href="#" class="buy-btn">
-                                        <i class="fab fa-whatsapp"></i> اطلبي الآن
-                                    </a>
-                                    <button class="share-btn" title="مشاركة المنتج">
-                                        <i class="fas fa-share-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                        productsContainer.insertBefore(card, productsContainer.firstChild);
-                    });
-                }
-            })
-            .catch(err => console.error("خطأ في جلب المنتجات أونلاين:", err));
+                        </div>
+                    `;
+                    productsContainer.insertBefore(card, productsContainer.firstChild);
+                });
+            }
+        })
+        .catch(err => console.error("خطأ في جلب المنتجات أونلاين:", err));
     }
-
 
     // ==========================================
     // 4. نظام تكبير الصور والطلبات والمشاركة (Dynamic Bind)
@@ -115,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const lightboxCaption = document.getElementById("lightbox-caption");
     const closeLightbox = document.querySelector(".close-lightbox");
 
-    // نستخدم تكتيك الـ Delegation ليعمل الكود مع المنتجات القديمة والجديدة معاً
     document.body.addEventListener("click", (e) => {
         // أ) تكبير الصورة عند الضغط عليها
         if (e.target.classList.contains("zoomable-img")) {
@@ -162,10 +159,5 @@ document.addEventListener("DOMContentLoaded", () => {
             lightboxModal.style.display = "none";
         });
     }
-
-    window.addEventListener("click", (e) => {
-        if (e.target === loginModal) loginModal.style.display = "none";
-        if (e.target === lightboxModal) lightboxModal.style.display = "none";
-    });
 
 });
