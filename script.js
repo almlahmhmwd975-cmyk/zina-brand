@@ -63,43 +63,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
     // 3. 🆕 جلب وعرض المنتجات المرفوعة من الهاتف تلقائياً
+        // ==========================================
+    // 3. جلب وعرض المنتجات من السيرفر السحابي أونلاين
     // ==========================================
     const productsContainer = document.querySelector(".products-container");
-    // جلب قائمة المنتجات المخزنة من لوحة التحكم
-    const savedProducts = JSON.parse(localStorage.getItem("zina_products")) || [];
 
-    if (productsContainer && savedProducts.length > 0) {
-        savedProducts.forEach(product => {
-            // إنشاء كارت HTML مخصص لكل منتج جديد تم رفعه
-            const card = document.createElement("div");
-            card.className = "product-card";
-            card.setAttribute("data-id", product.id);
+    if (productsContainer) {
+        // جلب البيانات مباشرة من السيرفر أونلاين المشترك لجميع الأجهزة
+        fetch("https://kvdb.io")
+            .then(response => response.json())
+            .then(savedProducts => {
+                if (savedProducts && savedProducts.length > 0) {
+                    savedProducts.forEach(product => {
+                        const card = document.createElement("div");
+                        card.className = "product-card";
+                        card.setAttribute("data-id", product.id);
 
-            // تجهيز شارة الحالة إن وجدت
-            const badgeHTML = product.badge ? `<span class="badge">${product.badge}</span>` : "";
+                        const badgeHTML = product.badge ? `<span class="badge">${product.badge}</span>` : "";
 
-            card.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.title}" class="zoomable-img">
-                    ${badgeHTML}
-                </div>
-                <div class="product-info">
-                    <h3>${product.title}</h3>
-                    <p class="price">${product.price}</p>
-                    <div class="card-actions">
-                        <a href="#" class="buy-btn">
-                            <i class="fab fa-whatsapp"></i> اطلبي الآن
-                        </a>
-                        <button class="share-btn" title="مشاركة المنتج">
-                            <i class="fas fa-share-alt"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            // إضافة المنتج المرفوع حديثاً إلى أول المعرض ليراه الزوار فوراً
-            productsContainer.insertBefore(card, productsContainer.firstChild);
-        });
+                        card.innerHTML = `
+                            <div class="product-image">
+                                <img src="${product.image}" alt="${product.title}" class="zoomable-img">
+                                ${badgeHTML}
+                            </div>
+                            <div class="product-info">
+                                <h3>${product.title}</h3>
+                                <p class="price">${product.price}</p>
+                                <div class="card-actions">
+                                    <a href="#" class="buy-btn">
+                                        <i class="fab fa-whatsapp"></i> اطلبي الآن
+                                    </a>
+                                    <button class="share-btn" title="مشاركة المنتج">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        productsContainer.insertBefore(card, productsContainer.firstChild);
+                    });
+                }
+            })
+            .catch(err => console.error("خطأ في جلب المنتجات أونلاين:", err));
     }
+
 
     // ==========================================
     // 4. نظام تكبير الصور والطلبات والمشاركة (Dynamic Bind)
