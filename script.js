@@ -63,15 +63,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 3. جلب وعرض المنتجات من السيرفر السحابي المفتوح والمضمون
     // ==========================================
+       // ==========================================
+    // 3. جلب وعرض المنتجات من السيرفر السحابي الخاص بزينة
+    // ==========================================
     const productsContainer = document.querySelector(".products-container");
 
     if (productsContainer) {
-        fetch("https://jsonbin.io", {
-            headers: { "X-Master-Key": "$2a$10$vO8k9P5T36W5D7Sg8nR7euC6M8nZ9P7L5K7e4q8e8nZ8P7L5K7e4q" }
+        fetch("https://kvdb.io")
+        .then(response => {
+            if (!response.ok) throw new Error("قاعدة البيانات فارغة حالياً");
+            return response.json();
         })
-        .then(response => response.json())
-        .then(resData => {
-            const savedProducts = resData.record || [];
+        .then(savedProducts => {
             if (savedProducts && savedProducts.length > 0) {
                 savedProducts.forEach(product => {
                     const card = document.createElement("div");
@@ -102,8 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
         })
-        .catch(err => console.error("خطأ في جلب المنتجات أونلاين:", err));
+        .catch(err => console.log("في انتظار رفع أول منتج أونلاين:", err));
     }
+
 
     // ==========================================
     // 4. نظام تكبير الصور والطلبات والمشاركة (Dynamic Bind)
